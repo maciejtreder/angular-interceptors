@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserService } from './user.service';
 
 @Component({
@@ -14,14 +14,15 @@ export class AppComponent {
     password: new FormControl('')
   });
 
-  public info: Observable<any> = this.userService.getInfo();
-  public secretInfo: Observable<any> = this.userService.getSecretInfo();
+  public user: any = this.userService.getUser();
+  public secretInfo: Observable<any> = of(null);
 
   constructor(private userService: UserService) {}
 
   public onSubmit(): void {
     this.userService.authenticate(this.loginForm.value).subscribe( _ => {
-      this.info = this.userService.getInfo();
+      this.user = this.userService.getUser();
+      this.loginForm.reset();
     });
   }
 

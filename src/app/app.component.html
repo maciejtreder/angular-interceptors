@@ -1,9 +1,9 @@
-<p>Hello {{(info | async)?.name}} {{(info | async)?.surname}}</p>
+<p>Hello {{user?.name}}</p>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
   <label>login: <input type="text" formControlName="login" /></label>
   <label>password: <input type="password" formControlName="password" /></label>
   <input type="submit" value="login" />
 </form>
-<button (click)="invalidateAuthToken()">invalidate authorization token</button>
-<button (click)="showSecret()">show me secret data</button>
+<button *ngIf="!!user" (click)="invalidateAuthToken()">invalidate authorization token</button>
+<button *ngIf="user?.privileges.includes('see_secret')" (click)="showSecret()">show me secret data</button>
 <p>The secret is... {{(secretInfo | async)?.data}}</p>

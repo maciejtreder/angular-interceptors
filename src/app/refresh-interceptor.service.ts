@@ -13,13 +13,12 @@ export class RefreshInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      catchError(err => {
-        console.log(request.url.includes('refresh'));
+      catchError(_ => {
+        console.log('error')
         if(request.url.includes('refresh')) {
           return next.handle(request)
         } else {
           return this.us.refresh().pipe(
-            // request.headers
             flatMap(_ => next.handle(request))
           )
         }
