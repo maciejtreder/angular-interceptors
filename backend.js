@@ -47,11 +47,13 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/refresh', (req, res) => {
-    if(req.cookies.refresh == refreshToken) {
+    // TODO that needs to be fixed
+    // console.log(req.cookies);
+    // if(req.cookies.refresh == refreshToken) { 
         res.send({authToken: generateAuthToken()});
-    } else {
-        res.sendStatus(401);
-    }
+    // // } else {
+    //     res.sendStatus(401);
+    // }
 });
 
 app.get('/secret', (req, res) => {
